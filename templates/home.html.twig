@@ -2,45 +2,9 @@
 
 {% block body %}
 
-    <table>
-        <thead>
-        <tr>
-            {% for article in articles %}
-                <th>  {{ article.title }} </th>
-            {% endfor %}
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            {% for article in articles %}
-                <td>  {{ article.content }} </td>
-            {% endfor %}
-        </tr>
-        <tr>
-            {% for article in articles %}
-                <td>  {{ article.category.name }} </td>
-            {% endfor %}
-        </tr>
-        </tbody>
-
-    </table>
-    <table>
-        <thead>
-            {% for categ in categories %}
-        <tr>
-                <th>  {{ categ.name }} </th>
-                {% for article in articles if article.category.id == categ.id %}
-                <td>  {{ article.title }} </td>
-                <td>  {{ article.content }} </td>
-                    {% endfor %}
-        </tr>
-                {% endfor %}
-        </thead>
-        <tbody>
-        <tr>
-        </tr>
-        </tbody>
-
-    </table>
+    <h1>Title of the articles </h1>
+    {% for article in articles %}
+    <div> {{ article.title }} </div>
+    {% endfor %}
 
 {% endblock %}

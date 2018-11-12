@@ -3,33 +3,23 @@
 
 namespace App\Controller;
 
+use App\Entity\Article;
 use App\Repository\ArticleRepository;
-use App\Repository\CategoryRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
 class HomeController extends AbstractController
 {
-    private $Repository;
-    private $repository;
-
-    public function __construct(ArticleRepository $Repository, CategoryRepository $repository)
+    /**
+     * @Route("/home", name="home")
+     */
+    public function index(ArticleRepository $articleRepository)
     {
-        $this->Repository = $Repository;
-        $this->repository = $repository;
+        $articles = $articleRepository->findAll();
+        return $this->render('home.html.twig', ['articles' => $articles]);
+
     }
 
-    /**
-     * @Route("/")
-     */
-        public function index()
-        {
-            $articles = $this->Repository->findAll();
-            $categories = $this->repository->findAll();
 
-
-
-            return $this->render('home.html.twig', ['articles' => $articles, 'categories' => $categories]);
-        }
 }
