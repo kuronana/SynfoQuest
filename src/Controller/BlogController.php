@@ -4,6 +4,7 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use App\Form\ArticleType;
 use App\Form\CategoryType;
 use App\Repository\ArticleRepository;
 use App\Repository\CategoryRepository;
@@ -113,12 +114,37 @@ class BlogController extends AbstractController
     }
 
     /**
+     * @param Request $request
+     * @Route("/article", name="addArticle")
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function addArticle(Request $request)
+    {
+        $articles = $this->articleRepository->findAll();
+
+        $form = $this->createForm(ArticleType::class);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $datArticle = $form->getData();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($datArticle);
+            $em->flush();
+            return $this->redirectToRoute('addArticle');
+        }
+
+        return $this->render('Blog/addArticle.html.twig', ['articles' => $articles, 'form' => $form->createView()]);
+    }
+
+    /**
      * @Route("/category/remove/{id}", name="deleteCategory")
      */
     public function deleteCategory($id)
     {
         $em = $this->getDoctrine()->getManager();
-        $category = $em->getRepository(Category::class)->find($id);
+        $category = $this->categoryRepository->find($id);
         $em->remove($category);
         $em->flush();
 
