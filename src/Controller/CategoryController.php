@@ -18,7 +18,7 @@ class CategoryController extends AbstractController
     }
     /**
      * @param string $slug The slugger
-     * @Route("/blog/category/{slug}", requirements={ "slug" = "[0-9a-z-]+" }, name="blog_show")
+     * @Route("/blog/category/slug/{slug}", requirements={ "slug" = "[0-9a-z-]+" }, name="blog_show")
      * @return Response A response instance
      */
     public function show($slug = '1'): Response
