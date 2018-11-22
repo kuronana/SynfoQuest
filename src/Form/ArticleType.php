@@ -20,7 +20,6 @@ class ArticleType extends AbstractType
             ->add('category', EntityType::class, [
                 'class' => Category::class,
                 'choice_label' => 'name',
-                'attr' => ['class' => 'form_control']
             ])
             ->add('tags', EntityType::class, [
                 'class' => Tag::class,
