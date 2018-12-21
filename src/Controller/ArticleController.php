@@ -27,7 +27,7 @@ class ArticleController extends AbstractController
     /**
      * @Route("/new", name="article_new", methods="GET|POST")
      */
-    public function new(Request $request, Slugify $slugify): Response
+    public function new(Request $request, Slugify $slugify, \Swift_Mailer $mailer): Response
     {
         $article = new Article();
         $form = $this->createForm(ArticleType::class, $article);
@@ -38,6 +38,20 @@ class ArticleController extends AbstractController
             $article->setSlug($slugify->generate($article->getTitle()));
             $em->persist($article);
             $em->flush();
+
+            $destinataire = 'kuroe94i@gmail.com';
+            $message = (new \Swift_Message('Un nouvel article vient d\'être publié !'))
+                ->setFrom($destinataire)
+                ->setTo('jess94i@hotmail.fr')
+                ->setBody($this->renderView(
+                    'mail.html.twig',[
+                    'article' => $article->getTitle(),
+                    'id' => $article->getId()
+                ]),
+            'text/html'
+            );
+
+            $mailer->send($message);
 
             return $this->redirectToRoute('article_index');
         }

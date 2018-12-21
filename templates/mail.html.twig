@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}{% endblock %}
+
+{% block body %}
+
+    <table>
+        <tr>
+            <td style="color: #5a6268">Bonjour, un article à été ajouté à votre blog. Son nom : {{ article }}.</td>
+            <td>Passez une bonne journée !</td>
+        </tr>
+        <tr>
+            <td>Cliquez <a href="http://127.0.0.1:8002/article/{{ id }}">ici</a> pour allez vers l'article {{ article }}</td>
+        </tr>
+    </table>
+
+{% endblock %}
+
+
+
+
+{% block javascripts %}{% endblock %}
